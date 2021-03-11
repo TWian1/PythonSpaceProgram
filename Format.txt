@@ -1,0 +1,6 @@
+Name
+Mass
+Cost
+Capactiy/difference of dry mass and mass/Thrust
+Nothing/Fuel/ISP
+:

@@ -1,0 +1,14 @@
+Kerbin Orbit(1):3400
+Kerbostationary Orbit(7):4515
+Mun Encounter(2):4260
+Mun Orbit(8):4540
+Mun Landing(11):5120
+Minmus Encounter(3):4330
+Minmus Orbit(6):4480
+Minmus Landing(9):4660
+Duna Encounter(5):4460
+Duna Orbit(10):5070
+Duna Landing(13):6520
+Eve Encounter(4):4420
+Eve Orbit(12):5800
+Eve Landing(14):13800

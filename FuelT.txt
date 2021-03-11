@@ -1,0 +1,18 @@
+FLT-400 Fuel Tank
+2.25
+800
+-2
+200
+:
+Rockomax X200-32 Fuel Tank
+18
+3000
+-16
+1500
+:
+Mk3 Rocket Fuel Fuselage
+28.57
+5000
+-25
+2500
+:
