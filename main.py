@@ -1,18 +1,20 @@
 import os
 import time
 import math
+
+
+#Selects version for the clear terminal message
+
 print("Linux(1)\n")
 print("Microsoft(2)\n")
-clearmsg = ""
-while True:
+Version = ""
+while not(Version in ["1", "2"]):  
   Version = input("?:")
-  if Version == "1":
-    clearmsg = "clear"
-    break
-  elif Version == "2":
-    clearmsg = "cls"
-    break
+clearmsg = ['clear', 'cls'][int(Version) - 1]
+
+
 #sets up profile
+
 class profile:
   money = 10001
   science = 0
@@ -20,26 +22,35 @@ class profile:
   Location = "SC"
 turns = 0
 
+
 #Checks if all kerbals are dead
+
 def checkkerbs():
+
   quitthing = False
   global profile
   global clearmsg
+
   if profile.kerbs < 1:
+
     os.system(clearmsg)
     print("Whoops, All your kerbs died. \n")
     print("Get 10 More Kerbs $10000 (1)\n")
     print("Give Up (2)\n")
-    while True:
+    while not(quitthing) and profile.kerbs < 1:
+
       answer = input("?:")
       if answer == "1":
+
         if profile.money < 10000:
+
           os.system(clearmsg)
           print("Not enogh money. \n")
           print("Quiting \n")
           quitthing = True
-          break
+
         else:
+
           os.system(clearmsg)
           profile.money -= 10000
           profile.kerbs += 10
@@ -47,18 +58,18 @@ def checkkerbs():
           print("Money: $" + str(profile.money) + "\n")
           print("Kerbs: " + str(profile.kerbs) + "\n")
           print("10 Kerbs hired for $10,000")
-          break
+
       elif answer == "2":
+
         os.system(clearmsg)
         print("Quiting \n")
         quitthing = True
-        break
-    if quitthing:
-      return(True)
-    else:
-      return(False)
+
+    return quitthing
+
 
 #Loading animation
+
 def loading(breaktime):
   global clearmsg
   os.system(clearmsg)
@@ -172,6 +183,10 @@ while True:
         os.system(clearmsg)
 
         #Selecting Parts
+
+
+        #command modules
+
         cmmdmods = open('Data/Parts/Commod.txt', 'r')
         cmmdmods = cmmdmods.readlines()
         newcmdmods = []
@@ -205,40 +220,88 @@ while True:
         print("Command module: " + newcmdmods[cmmdmoda][0] + "\n")
         print("mass: " + str(totalw) + " t\n")
         print("cost: $" + str(totalc) + "\n")
-        Fueltanks = open('Data/Parts/FuelT.txt', 'r')
-        Fueltanks = Fueltanks.readlines()
-        NewFuelTanks = []
-        temp = []
-        for j in Fueltanks:
-          j = j.rstrip('\n')
-          if j == ":":
-            NewFuelTanks.append(temp)
-            temp = []
-            continue
-          temp.append(j)
-        counter = -1
-        print("Select a fuel tank\n")
-        for k in NewFuelTanks:
-          counter += 1
-          print(str(k[0]) + "(" + str(counter+1) + ")\n")
-        possibleopts = []
-        for j in range(counter + 2):
-          possibleopts.append(str(j))
-        while True:
-          fueltanka = input("?:")
-          if not(fueltanka in possibleopts):
-            continue
-          if fueltanka == "0":
-            continue
-          fueltanka = int(fueltanka) - 1
-          break
-        os.system(clearmsg)
-        totalw += float(NewFuelTanks[fueltanka][1])
-        totalc += float(NewFuelTanks[fueltanka][2])
-        print("Command module: " + newcmdmods[cmmdmoda][0] + "\n")
-        print("Fuel Tank: " + NewFuelTanks[fueltanka][0] + "\n")
-        print("mass: " + str(totalw) + " t\n")
-        print("cost: $" + str(totalc) + " \n")
+
+
+        #Fuel Tanks
+
+        totalfueltanks = []
+        fueltanka = ""
+        counter2 = 1
+        totalm = 0
+        totalf = 0
+        totaldm = 0
+        totalco = 0
+        while not(fueltanka == False):
+          Fueltanks = open('Data/Parts/FuelT.txt', 'r')
+          Fueltanks = Fueltanks.readlines()
+          NewFuelTanks = []
+          temp = []
+          for j in Fueltanks:
+            j = j.rstrip('\n')
+            if j == ":":
+              NewFuelTanks.append(temp)
+              temp = []
+              continue
+            temp.append(j)
+          counter = -1
+          print("Select a fuel tank\n")
+          for k in NewFuelTanks:
+            counter += 1
+            print(str(k[0]) + "(" + str(counter+1) + ")\n")
+          print("input done to quit\n")
+          possibleopts = []
+          for j in range(counter + 2):
+            possibleopts.append(str(j))
+          fueltanka = ""
+          while True:
+            fueltanka = input("?:")
+            if fueltanka == "done":
+              break
+            if not(fueltanka in possibleopts):
+              continue
+            if fueltanka == "0":
+              continue
+            fueltanka = int(fueltanka) - 1
+            break
+          if fueltanka == "done":
+            if counter2 == 1:
+              os.system(clearmsg)
+              print("NO YOU NEEEEED A FUEL TANK")
+              fueltanka == ""
+              continue
+            else:
+              fueltanka = False
+              continue
+          os.system(clearmsg)
+          totalfueltanks.append(NewFuelTanks[fueltanka])
+
+          totalm = 0
+          totalf = 0
+          totaldm = 0
+          totalco = 0
+          totalw -= totalm
+          totalc -= totalco
+          for l in totalfueltanks:
+            totalm += float(l[1])
+          for l in totalfueltanks:
+            totalco += float(l[2])
+          for l in totalfueltanks:
+            totaldm += float(l[3]) 
+          for l in totalfueltanks:
+            totalf += float(l[4])
+          totalw += totalm
+          totalc += totalco
+
+          print("Command module: " + newcmdmods[cmmdmoda][0] + "\n")
+          for l in totalfueltanks:
+            print("Fuel Tank: " + l[0] + "\n")
+          print("mass: " + str(totalw) + " t\n")
+          print("cost: $" + str(totalc) + " \n")
+          counter2 += 1
+
+        #engines
+
+
         Engines = open('Data/Parts/Engine.txt', 'r')
         Engines = Engines.readlines()
         NewEngines = []
@@ -272,11 +335,13 @@ while True:
         totalc += float(NewEngines[enginea][2])
         totalw += float(NewEngines[enginea][1])
         twratioatm = float(NewEngines[enginea][3])/(totalw*9.8)
-        DeltaV = float(NewEngines[enginea][4])*9.82*math.log(totalw/(totalw+float(NewFuelTanks[fueltanka][3])))
+        DeltaV = float(NewEngines[enginea][4])*9.82*math.log(totalw/(totalw+float(totaldm)))
         while True:
           os.system(clearmsg)
           print("Command module: " + newcmdmods[cmmdmoda][0] + "\n")
-          print("Fuel Tank: " + NewFuelTanks[fueltanka][0] + "\n")
+          for l in totalfueltanks:
+            print("Fuel Tank: " + l[0] + "\n")
+          print(totaldm)
           print("Engine: " + NewEngines[enginea][0] + "\n")
           print("mass: " + str(totalw) + "\n")
           print("DeltaV: " + str(int(DeltaV)) + "\n")
@@ -292,7 +357,8 @@ while True:
         os.system(clearmsg)
         twratioatm = float(NewEngines[enginea][3])/(totalw*9.8)*(int(throttle)/100)
         print("Command module: " + newcmdmods[cmmdmoda][0] + "\n")
-        print("Fuel Tank: " + NewFuelTanks[fueltanka][0] + "\n")
+        for l in totalfueltanks:
+            print("Fuel Tank: " + l[0] + "\n")
         print("Engine: " + NewEngines[enginea][0] + "\n")
         print("mass: " + str(totalw) + "\n")
         print("DeltaV: " + str(int(DeltaV)) + "\n")
@@ -327,6 +393,10 @@ while True:
           img1.close()
           input("Continue?(press enter)")
           os.system(clearmsg)
+
+
+          #testing for landing sites
+
           print("You can travel to:\n")
           LandingSites = open('Data/Landing Sites/LandingLocations.txt', 'r')
           possible = []
@@ -338,12 +408,14 @@ while True:
           print(possible)
           LandingSites.close()
           input()
+
       elif build == "2":
         profile.Location = "SC"
         break
 
   #R&D Options
   elif profile.Location == "R&D":
+
     print("Not programmed yet")
     input("Press enter to return")
     profile.Location = "SC"
