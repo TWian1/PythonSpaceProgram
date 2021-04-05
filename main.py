@@ -1,3 +1,5 @@
+#imports stuff
+
 import os
 import time
 import math
@@ -5,8 +7,7 @@ import math
 
 #Selects version for the clear terminal message
 
-print("Linux(1)\n")
-print("Microsoft(2)\n")
+print("Linux(1)\n\nMicrosoft(2)\n")
 Version = ""
 while not(Version in ["1", "2"]):  
   Version = input("?:")
@@ -90,12 +91,9 @@ def findc(line):
   beforeline = ""
   afterline = ""
   for a in line:
-    if beforec and not(a==":"):
-      beforeline += a
-    elif beforec == False:
-      afterline += a
-    if a==":":
-      beforec = False
+    if beforec and not(a==":"): beforeline += a
+    elif beforec == False: afterline += a
+    if a==":": beforec = False
   return [beforeline, afterline]
 #Turn Loop
 while True:
@@ -106,8 +104,7 @@ while True:
   print("Kerbs: " + str(profile.kerbs) + "\n")
   print("Location: " + str(profile.Location) + "\n")
   checked = checkkerbs()
-  if checked:
-    break
+  if checked: break
   if profile.money < 1:
     os.system(clearmsg)
     print("You ran out of money. \n")
@@ -148,8 +145,7 @@ while True:
   print("Kerbs: " + str(profile.kerbs) + "\n")
   print("Location: " + str(profile.Location) + "\n")
   checked = checkkerbs()
-  if checked:
-    break
+  if checked: break
   if profile.money < 1:
     os.system(clearmsg)
     print("You ran out of money. \n")
@@ -208,10 +204,8 @@ while True:
           possibleopts.append(str(j))
         while True:
           cmmdmoda = input("?:")
-          if not(cmmdmoda in possibleopts):
-            continue
-          if cmmdmoda == "0":
-            continue
+          if not(cmmdmoda in possibleopts): continue
+          if cmmdmoda == "0": continue
           cmmdmoda = int(cmmdmoda) - 1
           break
         os.system(clearmsg)
@@ -255,12 +249,9 @@ while True:
           fueltanka = ""
           while True:
             fueltanka = input("?:")
-            if fueltanka == "done":
-              break
-            if not(fueltanka in possibleopts):
-              continue
-            if fueltanka == "0":
-              continue
+            if fueltanka == "done": break
+            if not(fueltanka in possibleopts): continue
+            if fueltanka == "0": continue
             fueltanka = int(fueltanka) - 1
             break
           if fueltanka == "done":
@@ -323,10 +314,8 @@ while True:
           possibleopts.append(str(j))
         while True:
           enginea = input("?:")
-          if not(enginea in possibleopts):
-            continue
-          if enginea == "0":
-            continue
+          if not(enginea in possibleopts): continue
+          if enginea == "0": continue
           enginea = int(enginea) - 1
           break
 
@@ -352,8 +341,7 @@ while True:
           possiblethrottles = []
           for j in range(101):
             possiblethrottles.append(str(j))
-          if throttle in possiblethrottles:
-            break
+          if throttle in possiblethrottles: break
         os.system(clearmsg)
         twratioatm = float(NewEngines[enginea][3])/(totalw*9.8)*(int(throttle)/100)
         print("Command module: " + newcmdmods[cmmdmoda][0] + "\n")
@@ -372,10 +360,8 @@ while True:
           if Launch == "2":
             profile.Location = "SC"
             break
-          elif Launch == "1":
-            break
-        if Launch == "2":
-          break
+          elif Launch == "1": break
+        if Launch == "2": break
         if twratioatm < 1.01:
           print("TWR TOO LOW\n")
           input("PRESS ENTER TO RETURN TO SC")
@@ -403,8 +389,7 @@ while True:
           for a1 in LandingSites.readlines():
             a1.rstrip('\n')
             split = findc(a1)
-            if int(split[1].rstrip('\n'))<DeltaV:
-              possible.append(split[0])
+            if int(split[1].rstrip('\n'))<DeltaV: possible.append(split[0])
           print(possible)
           LandingSites.close()
           input()
@@ -416,6 +401,5 @@ while True:
   #R&D Options
   elif profile.Location == "R&D":
 
-    print("Not programmed yet")
-    input("Press enter to return")
+    input("Not programmed yet\nPress enter to return")
     profile.Location = "SC"
